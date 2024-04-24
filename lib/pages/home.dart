@@ -1,5 +1,7 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:popcorn/global.dart';
 
 class HomePage extends StatefulWidget {
@@ -9,28 +11,115 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+/// Main Home page
 class _HomePageState extends State<HomePage> {
+  int pageIndex = 0;
+
   @override
   Widget build(BuildContext context) {
+    HexColor navBarSelectedColor = CustomColors.primaryVoilet;
+    HexColor navBarBg = CustomColors.secondaryViolet;
+    const bottomNavElevation = 20.0;
+
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(65.0),
-        child: customAppBar(),
-      ),
+      appBar: myAppBar(),
       floatingActionButton: customFAB(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          boxShadow: [
-            getCustomBoxShadow(),
+      bottomNavigationBar: NavigationBarTheme(
+        data: NavigationBarThemeData(
+          labelTextStyle: MaterialStateProperty.all(
+            TextStyle(color: CustomColors.offwhite),
+          ),
+        ),
+        child: NavigationBar(
+          elevation: bottomNavElevation,
+          indicatorColor: navBarSelectedColor,
+          backgroundColor: navBarBg,
+          selectedIndex: pageIndex,
+          onDestinationSelected: (int index) {
+            setState(() {
+              pageIndex = index;
+            });
+          },
+          destinations: [
+            NavigationDestination(
+              selectedIcon: const Icon(Icons.list_alt),
+              icon: Icon(
+                Icons.list,
+                color: getIconColor(currentIndex: pageIndex, targetIndex: 0),
+              ),
+              label: 'Watch List',
+            ),
+            NavigationDestination(
+              selectedIcon: const Icon(Icons.explore_outlined),
+              icon: Icon(
+                Icons.explore,
+                color: getIconColor(currentIndex: pageIndex, targetIndex: 1),
+              ),
+              label: 'Explore',
+            ),
+            NavigationDestination(
+              selectedIcon: const Icon(Icons.account_circle_outlined),
+              icon: Icon(
+                Icons.account_circle,
+                color: getIconColor(currentIndex: pageIndex, targetIndex: 2),
+              ),
+              label: 'Profile',
+            ),
           ],
         ),
-        child: getGNav(),
       ),
-      // bottomNavigationBar:
     );
   }
 
+  /// Get the bottom navbar icon's color on click
+  Color getIconColor({currentIndex, targetIndex}) {
+    if (currentIndex == targetIndex) {
+      return Colors.black;
+    } else {
+      return CustomColors.offwhite;
+    }
+  }
+
+  /// My appbar
+  PreferredSize myAppBar() {
+    const appTitle = 'POPCRON';
+    const boldWeight = 700.0;
+    List<FontVariation> titleWight = const <FontVariation>[
+      FontVariation('wght', boldWeight)
+    ];
+    const borderRadius = 15.0;
+    const titleSize = 28.0;
+    const appBarHeight = 65.0;
+    const appBarElevation = 20.0;
+    HexColor appBarBg = CustomColors.secondaryViolet;
+    HexColor titleColor = CustomColors.offwhite;
+
+    return PreferredSize(
+      preferredSize: const Size.fromHeight(appBarHeight),
+      child: AppBar(
+        elevation: appBarElevation,
+        centerTitle: true,
+        backgroundColor: appBarBg,
+        title: Text(
+          appTitle,
+          style: TextStyle(
+            color: titleColor,
+            fontSize: titleSize,
+            fontVariations: titleWight,
+          ),
+        ),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(borderRadius),
+            bottomRight: Radius.circular(borderRadius),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Floating action button
   FloatingActionButton customFAB() {
     return FloatingActionButton(
       onPressed: () {},
@@ -39,66 +128,6 @@ class _HomePageState extends State<HomePage> {
       child: const Icon(
         Icons.add,
         size: 32.0,
-      ),
-    );
-  }
-
-  BoxShadow getCustomBoxShadow() {
-    return BoxShadow(
-      color: Colors.black.withOpacity(0.25),
-      spreadRadius: 5,
-      blurRadius: 7,
-      offset: const Offset(0, 3), // changes position of shadow
-    );
-  }
-
-  GNav getGNav() {
-    return GNav(
-      backgroundColor: CustomColors.secondaryViolet,
-      color: CustomColors.offwhite,
-      activeColor: Colors.black,
-      tabBackgroundColor: CustomColors.primaryVoilet,
-      padding: const EdgeInsets.all(8.0),
-      tabMargin: const EdgeInsets.all(20.0),
-      gap: 8.0,
-      iconSize: 32.0,
-      tabs: const [
-        GButton(
-          icon: Icons.list,
-          text: 'Watch List',
-        ),
-        GButton(
-          icon: Icons.explore,
-          text: 'Explore',
-        ),
-        GButton(
-          icon: Icons.account_circle,
-          text: 'Profile',
-        ),
-      ],
-    );
-  }
-
-  AppBar customAppBar() {
-    const appTitle = 'POPCRON';
-
-    return AppBar(
-      elevation: 10.0,
-      title: Text(
-        appTitle,
-        style: TextStyle(
-          color: CustomColors.offwhite,
-          fontWeight: FontWeight.bold,
-          fontSize: 28.0,
-        ),
-      ),
-      centerTitle: true,
-      backgroundColor: CustomColors.secondaryViolet,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.elliptical(15, 15),
-          bottomRight: Radius.elliptical(15, 15),
-        ),
       ),
     );
   }
