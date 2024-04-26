@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:popcorn/global.dart';
-import 'package:popcorn/pages/explore_page.dart';
-import 'package:popcorn/pages/home_page.dart';
-import 'package:popcorn/pages/profile_page.dart';
+import 'package:popcorn/pages/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,12 +22,7 @@ class MyApp extends StatelessWidget {
             background: CustomColors.bgVoilet),
         useMaterial3: true,
       ),
-      initialRoute: '/home',
-      routes: {
-        '/home': (context) => const HomePage(),
-        '/explore': (context) => const ExplorePage(),
-        '/profile':(context) => const ProfilePage(),
-      },
+      home: const Home(),
     );
   }
 }

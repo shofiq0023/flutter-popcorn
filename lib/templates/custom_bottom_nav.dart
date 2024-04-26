@@ -3,8 +3,10 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:popcorn/global.dart';
 
 class MyNavigationBar extends StatefulWidget {
-  const MyNavigationBar({super.key});
-
+  // Callback function to pass the current page index to the Home widget
+  final Function(int) onIndexSelected;
+  const MyNavigationBar({super.key,  required this.onIndexSelected});
+  
   @override
   State<MyNavigationBar> createState() => _MyNavigationBarState();
 }
@@ -14,7 +16,6 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
 
   HexColor navBarSelectedColor = CustomColors.primaryVoilet;
   HexColor navBarBg = CustomColors.secondaryViolet;
-  double bottomNavElevation = 20.0;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,6 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
         ),
       ),
       child: NavigationBar(
-        elevation: bottomNavElevation,
         indicatorColor: navBarSelectedColor,
         backgroundColor: navBarBg,
         selectedIndex: pageIndex,
@@ -33,6 +33,9 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
           setState(() {
             pageIndex = index;
           });
+
+          // Calls the index passing function
+          widget.onIndexSelected(index);
         },
         destinations: getNavigations(),
       ),
@@ -77,4 +80,5 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
       ),
     ];
   }
+  
 }

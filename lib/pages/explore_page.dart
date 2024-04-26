@@ -12,11 +12,8 @@ class _ExplorePageState extends State<ExplorePage> {
   Widget build(BuildContext context) {
     return const Center(
       child: Text(
-        'COMMING SOON!',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 62.0,
-        ),
+        'EXPLORE',
+        style: TextStyle(color: Colors.white, fontSize: 62.0),
       ),
     );
   }
