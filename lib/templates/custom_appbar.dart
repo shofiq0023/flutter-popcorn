@@ -10,7 +10,8 @@ class MyAppbar extends StatelessWidget implements PreferredSizeWidget {
   final appTitle = 'POPCRON';
   final borderRadius = 15.0;
   final titleSize = 28.0;
-  final appBarElevation = 20.0;
+  final appBarElevation = 8.0;
+  final Color shadowColor = const Color.fromRGBO(0, 0, 0, 0.5);
   final List<FontVariation> titleWight = const <FontVariation>[FontVariation('wght', 700.0)];
   final HexColor appBarBg = CustomColors.secondaryViolet;
   final HexColor titleColor = CustomColors.offwhite;
@@ -26,6 +27,7 @@ class MyAppbar extends StatelessWidget implements PreferredSizeWidget {
         elevation: appBarElevation,
         centerTitle: true,
         backgroundColor: appBarBg,
+        shadowColor: shadowColor,
         title: Text(
           appTitle,
           style: TextStyle(

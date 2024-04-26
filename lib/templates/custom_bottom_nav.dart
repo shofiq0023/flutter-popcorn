@@ -19,25 +19,35 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
 
   @override
   Widget build(BuildContext context) {
-    return NavigationBarTheme(
-      data: NavigationBarThemeData(
-        labelTextStyle: MaterialStateProperty.all(
-          TextStyle(color: CustomColors.offwhite),
-        ),
+    return Container(
+      decoration: const BoxDecoration(
+        boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Color.fromRGBO(0, 0, 0, 0.2),
+              blurRadius: 10,
+            ),
+          ],
       ),
-      child: NavigationBar(
-        indicatorColor: navBarSelectedColor,
-        backgroundColor: navBarBg,
-        selectedIndex: pageIndex,
-        onDestinationSelected: (int index) {
-          setState(() {
-            pageIndex = index;
-          });
-
-          // Calls the index passing function
-          widget.onIndexSelected(index);
-        },
-        destinations: getNavigations(),
+      child: NavigationBarTheme(
+        data: NavigationBarThemeData(
+          labelTextStyle: MaterialStateProperty.all(
+            TextStyle(color: CustomColors.offwhite),
+          ),
+        ),
+        child: NavigationBar(
+          indicatorColor: navBarSelectedColor,
+          backgroundColor: navBarBg,
+          selectedIndex: pageIndex,
+          onDestinationSelected: (int index) {
+            setState(() {
+              pageIndex = index;
+            });
+      
+            // Calls the index passing function
+            widget.onIndexSelected(index);
+          },
+          destinations: getNavigations(),
+        ),
       ),
     );
   }
@@ -80,5 +90,5 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
       ),
     ];
   }
-  
+
 }
