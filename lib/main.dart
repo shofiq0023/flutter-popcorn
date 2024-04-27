@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:popcorn/databases/watch_list_database.dart';
 import 'package:popcorn/global.dart';
 import 'package:popcorn/pages/home.dart';
+import 'package:provider/provider.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  WatchListDatabase.initialize();
+
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => WatchListDatabase(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
