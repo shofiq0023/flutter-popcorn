@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:popcorn/databases/watch_list_database.dart';
 import 'package:popcorn/global.dart';
+import 'package:popcorn/models/watch_list.dart';
 import 'package:popcorn/pages/explore_page.dart';
 import 'package:popcorn/pages/profile_page.dart';
 import 'package:popcorn/pages/watch_list_page.dart';
 import 'package:popcorn/templates/custom_appbar.dart';
 import 'package:popcorn/templates/custom_bottom_nav.dart';
+import 'package:popcorn/templates/watch_list_create_dialog.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -15,10 +19,40 @@ class Home extends StatefulWidget {
 
 /// Main Home page
 class _HomeState extends State<Home> {
+  @override
+  void initState() {
+    super.initState();
+    fetchWatchList();
+  }
   int pageIndex = 0;
+
+  // Init with data
+
+  // create
+  void createWatchList() {
+    showDialog(
+      context: context,
+      builder: (context) => const WatchListCreateDialog(),
+    );
+  }
+
+  // read
+  void fetchWatchList() {
+    context.read<WatchListDatabase>().fetchWatchList();
+  }
+
+  // update
+  void updateWatchList() {}
+
+  // delete
+  void deleteWatchList() {}
 
   @override
   Widget build(BuildContext context) {
+    final watchListDb = context.watch<WatchListDatabase>();
+
+    List<WatchListModel> lists = watchListDb.watchLists;
+
     return Scaffold(
       appBar: MyAppbar(),
       floatingActionButton: customFAB(),
@@ -30,7 +64,9 @@ class _HomeState extends State<Home> {
         });
       }),
       body: [
-        const WatchListPage(),
+        WatchListPage(
+          listItems: lists,
+        ),
         const ExplorePage(),
         const ProfilePage()
       ][pageIndex], // Changes the content based on bottom navbar item click
@@ -40,7 +76,7 @@ class _HomeState extends State<Home> {
   /// Floating action button
   FloatingActionButton customFAB() {
     return FloatingActionButton(
-      onPressed: () {},
+      onPressed: createWatchList,
       shape: const CircleBorder(),
       backgroundColor: CustomColors.primaryVoilet,
       child: const Icon(
