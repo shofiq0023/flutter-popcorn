@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  WatchListDatabase.initialize();
+  await WatchListDatabase.initialize();
 
   runApp(
     ChangeNotifierProvider(

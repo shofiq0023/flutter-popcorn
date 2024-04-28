@@ -9,4 +9,9 @@ class WatchListModel {
   late String type;
   late bool isFinished;
   late int priority;
+
+  @override
+  String toString() {
+    return 'id: $id, title: $title, type: $type, priority: $priority';
+  }
 }

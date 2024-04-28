@@ -24,9 +24,8 @@ class _HomeState extends State<Home> {
     super.initState();
     fetchWatchList();
   }
+  
   int pageIndex = 0;
-
-  // Init with data
 
   // create
   void createWatchList() {

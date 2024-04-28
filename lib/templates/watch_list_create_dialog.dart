@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:popcorn/databases/watch_list_database.dart';
+import 'package:popcorn/global.dart';
 import 'package:popcorn/models/watch_list.dart';
+import 'package:popcorn/templates/my_dropdown_menu.dart';
 import 'package:provider/provider.dart';
+
+final List<String> showTypeList = [
+  'Movie',
+  'Series',
+  'Anime series',
+  'Anime movie'
+];
+
+final List<int> showPriorityList = [4, 1, 2, 3];
 
 class WatchListCreateDialog extends StatefulWidget {
   const WatchListCreateDialog({super.key});
@@ -12,7 +23,8 @@ class WatchListCreateDialog extends StatefulWidget {
 
 class WatchListCreateDialogState extends State<WatchListCreateDialog> {
   final titleController = TextEditingController();
-  final typeController = TextEditingController();
+  String? showType;
+  int? showPriority;
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +43,12 @@ class WatchListCreateDialogState extends State<WatchListCreateDialog> {
           onPressed: () {
             final newWatchListItem = WatchListModel()
               ..title = titleController.text
-              ..type = typeController.text
+              ..type = showType!
               ..isFinished = false
-              ..priority = 1;
+              ..priority = showPriority!;
+
             context.read<WatchListDatabase>().createWatchList(newWatchListItem);
             titleController.clear();
-            typeController.clear();
             Navigator.pop(context);
           },
           child: Text(
@@ -49,43 +61,50 @@ class WatchListCreateDialogState extends State<WatchListCreateDialog> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Enter the title",
+          /// For the title of the show
+          TextField(
+            controller: titleController,
+            decoration: InputDecoration(
+              label: Text(
+                "Title of the show",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: CustomColors.offwhite,
+                  fontSize: 16.0,
                 ),
               ),
-              TextField(
-                controller: titleController,
-                style: const TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            ],
+            ),
+            style: const TextStyle(
+              color: Colors.white,
+            ),
           ),
+
+          /// For spacing
           const SizedBox(
-            height: 20.0,
+            height: 30.0,
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Enter type",
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-              TextField(
-                controller: typeController,
-                style: const TextStyle(
-                  color: Colors.white,
-                ),
-              )
-            ],
-          )
+
+          /// Dropdown for Type of the show
+          MyDropdownMenu(
+            menuText: "Type of the show",
+            menuItems: showTypeList,
+            onShowTypeValue: (showTypeValue) {
+              showType = showTypeValue;
+            },
+          ),
+
+          /// For spacing
+          const SizedBox(
+            height: 30.0,
+          ),
+
+          /// Dropdown for show priority
+          MyDropdownMenu(
+            menuText: "Priority of the show",
+            priorityList: showPriorityList,
+            onShowPriorityValue: (showPriorityValue) {
+              showPriority = showPriorityValue;
+            },
+          ),
         ],
       ),
     );

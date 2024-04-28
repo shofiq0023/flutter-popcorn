@@ -1,20 +1,16 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:popcorn/global.dart';
 
 class WatchListItem extends StatefulWidget {
   final String title;
   final String type;
-  bool finished;
   final int priority;
 
-  WatchListItem({
+  const WatchListItem({
     super.key,
     required this.title,
     required this.type,
-    this.finished = false,
-    this.priority = 4,
+    required this.priority,
   });
 
   @override
@@ -56,7 +52,6 @@ class _WatchListItemState extends State<WatchListItem> {
               width: 12.0,
             ),
 
-
             // Title and radio button
             Expanded(
               child: Row(
@@ -73,7 +68,9 @@ class _WatchListItemState extends State<WatchListItem> {
                             style: TextStyle(
                               color: CustomColors.offwhite,
                               fontSize: 20.0,
-                              fontVariations: const <FontVariation>[FontVariation('wght', 700.0)],
+                              fontVariations: const <FontVariation>[
+                                FontVariation('wght', 700.0)
+                              ],
                             ),
                           ),
                           Text(
@@ -81,7 +78,9 @@ class _WatchListItemState extends State<WatchListItem> {
                             style: TextStyle(
                               color: CustomColors.offwhite,
                               fontSize: 10.0,
-                              fontVariations: const <FontVariation>[FontVariation('wght', 100.0)],
+                              fontVariations: const <FontVariation>[
+                                FontVariation('wght', 100.0)
+                              ],
                             ),
                           ),
                         ],
@@ -90,19 +89,14 @@ class _WatchListItemState extends State<WatchListItem> {
                   ),
 
                   // Placeholder radio button
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        widget.finished = !widget.finished;
-                      });
+                  IconButton(
+                    onPressed: () {
+                      
                     },
-                    child: Container(
-                      height: 15.0,
-                      width: 15.0,
-                      decoration: BoxDecoration(
-                        color: widget.finished ? CustomColors.primaryVoilet : CustomColors.bgVoilet,
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
+                    icon: Icon(
+                      Icons.playlist_remove,
+                      color: CustomColors.primaryVoilet,
+                      size: 28.0,
                     ),
                   ),
                 ],
@@ -131,5 +125,4 @@ class _WatchListItemState extends State<WatchListItem> {
       return CustomColors.cardBg;
     }
   }
-
 }
