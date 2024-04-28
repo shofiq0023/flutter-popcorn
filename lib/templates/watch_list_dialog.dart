@@ -25,38 +25,12 @@ class WatchListCreateDialogState extends State<WatchListCreateDialog> {
   final titleController = TextEditingController();
   String? showType;
   int? showPriority;
+  bool titleError = false;
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      actions: [
-        MaterialButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text(
-            "Cancel",
-            style: TextStyle(color: Colors.red.shade300),
-          ),
-        ),
-        MaterialButton(
-          onPressed: () {
-            final newWatchListItem = WatchListModel()
-              ..title = titleController.text
-              ..type = showType!
-              ..isFinished = false
-              ..priority = showPriority!;
-
-            context.read<WatchListDatabase>().createWatchList(newWatchListItem);
-            titleController.clear();
-            Navigator.pop(context);
-          },
-          child: Text(
-            "Create",
-            style: TextStyle(color: Colors.green.shade300),
-          ),
-        ),
-      ],
+      /// Dropdown menues
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,6 +39,14 @@ class WatchListCreateDialogState extends State<WatchListCreateDialog> {
           TextField(
             controller: titleController,
             decoration: InputDecoration(
+              error: titleError
+                  ? const Text(
+                      "Please enter a title!",
+                      style: TextStyle(
+                        color: Colors.red,
+                      ),
+                    )
+                  : null,
               label: Text(
                 "Title of the show",
                 style: TextStyle(
@@ -73,6 +55,13 @@ class WatchListCreateDialogState extends State<WatchListCreateDialog> {
                 ),
               ),
             ),
+            onChanged: (value) {
+              if (value.isNotEmpty) {
+                setState(() {
+                  titleError = false;
+                });
+              }
+            },
             style: const TextStyle(
               color: Colors.white,
             ),
@@ -107,6 +96,45 @@ class WatchListCreateDialogState extends State<WatchListCreateDialog> {
           ),
         ],
       ),
+
+      /// Action Buttons
+      actions: [
+        MaterialButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text(
+            "Cancel",
+            style: TextStyle(color: Colors.red.shade300),
+          ),
+        ),
+        MaterialButton(
+          onPressed: () {
+            if (titleController.text.isEmpty) {
+              setState(() {
+                titleError = true;
+              });
+            } else {
+              final newWatchListItem = WatchListModel()
+                ..title = titleController.text
+                ..type = showType ?? showTypeList.first
+                ..priority = showPriority ?? showPriorityList.first;
+
+              print(newWatchListItem.toString());
+
+              context
+                  .read<WatchListDatabase>()
+                  .createWatchList(newWatchListItem);
+              titleController.clear();
+              Navigator.pop(context);
+            }
+          },
+          child: Text(
+            "Create",
+            style: TextStyle(color: Colors.green.shade300),
+          ),
+        ),
+      ],
     );
   }
 }

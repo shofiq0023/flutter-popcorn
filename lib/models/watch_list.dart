@@ -7,7 +7,6 @@ class WatchListModel {
   Id id = Isar.autoIncrement;
   late String title;
   late String type;
-  late bool isFinished;
   late int priority;
 
   @override

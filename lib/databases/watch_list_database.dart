@@ -23,8 +23,7 @@ class WatchListDatabase extends ChangeNotifier {
     final newWatchListItem = WatchListModel()
       ..title = model.title
       ..type = model.type
-      ..priority = model.priority
-      ..isFinished = model.isFinished;
+      ..priority = model.priority;
 
     await isar.writeTxn(() => isar.watchListModels.put(newWatchListItem));
     fetchWatchList();
@@ -46,7 +45,6 @@ class WatchListDatabase extends ChangeNotifier {
     if (existingModel != null) {
       existingModel.title = model.title;
       existingModel.type = model.type;
-      existingModel.isFinished = model.isFinished;
       existingModel.priority = model.priority;
 
       await isar.writeTxn(() => isar.watchListModels.put(existingModel));

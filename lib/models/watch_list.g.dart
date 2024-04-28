@@ -17,23 +17,18 @@ const WatchListModelSchema = CollectionSchema(
   name: r'WatchListModel',
   id: 1933079281035040768,
   properties: {
-    r'isFinished': PropertySchema(
-      id: 0,
-      name: r'isFinished',
-      type: IsarType.bool,
-    ),
     r'priority': PropertySchema(
-      id: 1,
+      id: 0,
       name: r'priority',
       type: IsarType.long,
     ),
     r'title': PropertySchema(
-      id: 2,
+      id: 1,
       name: r'title',
       type: IsarType.string,
     ),
     r'type': PropertySchema(
-      id: 3,
+      id: 2,
       name: r'type',
       type: IsarType.string,
     )
@@ -69,10 +64,9 @@ void _watchListModelSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeBool(offsets[0], object.isFinished);
-  writer.writeLong(offsets[1], object.priority);
-  writer.writeString(offsets[2], object.title);
-  writer.writeString(offsets[3], object.type);
+  writer.writeLong(offsets[0], object.priority);
+  writer.writeString(offsets[1], object.title);
+  writer.writeString(offsets[2], object.type);
 }
 
 WatchListModel _watchListModelDeserialize(
@@ -83,10 +77,9 @@ WatchListModel _watchListModelDeserialize(
 ) {
   final object = WatchListModel();
   object.id = id;
-  object.isFinished = reader.readBool(offsets[0]);
-  object.priority = reader.readLong(offsets[1]);
-  object.title = reader.readString(offsets[2]);
-  object.type = reader.readString(offsets[3]);
+  object.priority = reader.readLong(offsets[0]);
+  object.title = reader.readString(offsets[1]);
+  object.type = reader.readString(offsets[2]);
   return object;
 }
 
@@ -98,12 +91,10 @@ P _watchListModelDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readBool(offset)) as P;
-    case 1:
       return (reader.readLong(offset)) as P;
-    case 2:
+    case 1:
       return (reader.readString(offset)) as P;
-    case 3:
+    case 2:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -257,16 +248,6 @@ extension WatchListModelQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<WatchListModel, WatchListModel, QAfterFilterCondition>
-      isFinishedEqualTo(bool value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'isFinished',
-        value: value,
       ));
     });
   }
@@ -608,20 +589,6 @@ extension WatchListModelQueryLinks
 
 extension WatchListModelQuerySortBy
     on QueryBuilder<WatchListModel, WatchListModel, QSortBy> {
-  QueryBuilder<WatchListModel, WatchListModel, QAfterSortBy>
-      sortByIsFinished() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'isFinished', Sort.asc);
-    });
-  }
-
-  QueryBuilder<WatchListModel, WatchListModel, QAfterSortBy>
-      sortByIsFinishedDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'isFinished', Sort.desc);
-    });
-  }
-
   QueryBuilder<WatchListModel, WatchListModel, QAfterSortBy> sortByPriority() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'priority', Sort.asc);
@@ -674,20 +641,6 @@ extension WatchListModelQuerySortThenBy
     });
   }
 
-  QueryBuilder<WatchListModel, WatchListModel, QAfterSortBy>
-      thenByIsFinished() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'isFinished', Sort.asc);
-    });
-  }
-
-  QueryBuilder<WatchListModel, WatchListModel, QAfterSortBy>
-      thenByIsFinishedDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'isFinished', Sort.desc);
-    });
-  }
-
   QueryBuilder<WatchListModel, WatchListModel, QAfterSortBy> thenByPriority() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'priority', Sort.asc);
@@ -728,13 +681,6 @@ extension WatchListModelQuerySortThenBy
 
 extension WatchListModelQueryWhereDistinct
     on QueryBuilder<WatchListModel, WatchListModel, QDistinct> {
-  QueryBuilder<WatchListModel, WatchListModel, QDistinct>
-      distinctByIsFinished() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'isFinished');
-    });
-  }
-
   QueryBuilder<WatchListModel, WatchListModel, QDistinct> distinctByPriority() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'priority');
@@ -761,12 +707,6 @@ extension WatchListModelQueryProperty
   QueryBuilder<WatchListModel, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
-    });
-  }
-
-  QueryBuilder<WatchListModel, bool, QQueryOperations> isFinishedProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'isFinished');
     });
   }
 

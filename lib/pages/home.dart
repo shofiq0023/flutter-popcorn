@@ -7,7 +7,7 @@ import 'package:popcorn/pages/profile_page.dart';
 import 'package:popcorn/pages/watch_list_page.dart';
 import 'package:popcorn/templates/custom_appbar.dart';
 import 'package:popcorn/templates/custom_bottom_nav.dart';
-import 'package:popcorn/templates/watch_list_create_dialog.dart';
+import 'package:popcorn/templates/watch_list_dialog.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
@@ -24,7 +24,7 @@ class _HomeState extends State<Home> {
     super.initState();
     fetchWatchList();
   }
-  
+
   int pageIndex = 0;
 
   // create
