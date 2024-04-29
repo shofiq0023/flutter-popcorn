@@ -60,7 +60,7 @@ class _WatchListItemState extends State<WatchListItem> {
               // Priority tag
               Container(
                 width: 4.0,
-                color: GlobalList.getPriorityColor(widget.watchListModel.priority),
+                color: GlobalList.getPriorityColorForCard(widget.watchListModel.priority),
               ),
 
               // Padding between priority tag and titles

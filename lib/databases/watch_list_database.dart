@@ -34,6 +34,9 @@ class WatchListDatabase extends ChangeNotifier {
     List<WatchListModel> lists = await isar.watchListModels.where().findAll();
     watchLists.clear();
     watchLists.addAll(lists);
+    watchLists.sort(
+      (a, b) => a.priority.compareTo(b.priority),
+    );
 
     notifyListeners();
   }
