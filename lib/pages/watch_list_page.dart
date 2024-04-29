@@ -28,6 +28,7 @@ class _WatchListPageState extends State<WatchListPage> {
             itemCount: widget.listItems.length,
             itemBuilder: (BuildContext context, int index) {
               return WatchListItem(
+                id: widget.listItems[index].id,
                 title: widget.listItems[index].title,
                 type: widget.listItems[index].type,
                 priority: widget.listItems[index].priority,

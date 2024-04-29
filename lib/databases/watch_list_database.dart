@@ -54,7 +54,7 @@ class WatchListDatabase extends ChangeNotifier {
 
   // Delete
   Future<void> deleteWatchList(int id) async {
-    await isar.watchListModels.delete(id);
+    await isar.writeTxn(() => isar.watchListModels.delete(id));
     await fetchWatchList();
   }
 }

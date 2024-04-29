@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:popcorn/databases/watch_list_database.dart';
 import 'package:popcorn/global.dart';
+import 'package:provider/provider.dart';
 
 class WatchListItem extends StatefulWidget {
+  final int id;
   final String title;
   final String type;
   final int priority;
 
   const WatchListItem({
     super.key,
+    required this.id,
     required this.title,
     required this.type,
     required this.priority,
@@ -18,6 +22,11 @@ class WatchListItem extends StatefulWidget {
 }
 
 class _WatchListItemState extends State<WatchListItem> {
+  // Delete
+  void deleteWatchList(int id) {
+    context.read<WatchListDatabase>().deleteWatchList(id);
+  }
+
   @override
   Widget build(BuildContext context) {
     // Main card container
@@ -91,10 +100,10 @@ class _WatchListItemState extends State<WatchListItem> {
                   // Placeholder radio button
                   IconButton(
                     onPressed: () {
-                      
+                      deleteWatchList(widget.id);
                     },
                     icon: Icon(
-                      Icons.playlist_remove,
+                      Icons.delete_forever,
                       color: CustomColors.primaryVoilet,
                       size: 28.0,
                     ),
