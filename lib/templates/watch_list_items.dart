@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:popcorn/databases/watch_list_database.dart';
 import 'package:popcorn/global.dart';
 import 'package:popcorn/models/watch_list.dart';
+import 'package:popcorn/templates/watch_list_update_dialog.dart';
 import 'package:provider/provider.dart';
 
 class WatchListItem extends StatefulWidget {
   final WatchListModel watchListModel;
 
-  const WatchListItem({
-    super.key,
-    required this.watchListModel
-  });
+  const WatchListItem({super.key, required this.watchListModel});
 
   @override
   State<WatchListItem> createState() => _WatchListItemState();
@@ -23,11 +21,13 @@ class _WatchListItemState extends State<WatchListItem> {
   }
 
   // Update
-  void showUpdateDialog() {
-    // showDialog(
-    //   context: context,
-    //   builder: (context) => const WatchListCreateDialog(),
-    // );
+  void showUpdateDialog(WatchListModel watchListModel) {
+    showDialog(
+      context: context,
+      builder: (context) => WatchListUpdateDialog(
+        watchListModel: watchListModel,
+      ),
+    );
   }
 
   @override
@@ -35,7 +35,7 @@ class _WatchListItemState extends State<WatchListItem> {
     // Main card container
     return GestureDetector(
       onTap: () {
-        showUpdateDialog();
+        showUpdateDialog(widget.watchListModel);
       },
       child: Container(
         clipBehavior: Clip.antiAlias,
@@ -51,7 +51,7 @@ class _WatchListItemState extends State<WatchListItem> {
             ),
           ],
         ),
-      
+
         // Main card content
         child: IntrinsicHeight(
           child: Row(
@@ -62,12 +62,12 @@ class _WatchListItemState extends State<WatchListItem> {
                 width: 4.0,
                 color: getPriorityColor(widget.watchListModel.priority),
               ),
-      
+
               // Padding between priority tag and titles
               const SizedBox(
                 width: 12.0,
               ),
-      
+
               // Title and radio button
               Expanded(
                 child: Row(
@@ -103,7 +103,7 @@ class _WatchListItemState extends State<WatchListItem> {
                         ),
                       ),
                     ),
-      
+
                     // Placeholder radio button
                     IconButton(
                       onPressed: () {
@@ -118,7 +118,7 @@ class _WatchListItemState extends State<WatchListItem> {
                   ],
                 ),
               ),
-      
+
               // Ending padding
               const SizedBox(
                 width: 20.0,

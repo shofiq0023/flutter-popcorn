@@ -5,32 +5,44 @@ import 'package:popcorn/global.dart';
 import 'package:popcorn/models/watch_list.dart';
 import 'package:provider/provider.dart';
 
-// final List<String> showTypeList = [
-//   'Movie',
-//   'Series',
-//   'Anime series',
-//   'Anime movie'
-// ];
+class WatchListUpdateDialog extends StatefulWidget {
+  final WatchListModel watchListModel;
 
-// final List<int> showPriorityList = [4, 1, 2, 3];
-
-class WatchListCreateDialog extends StatefulWidget {
-  const WatchListCreateDialog({super.key});
+  const WatchListUpdateDialog({super.key, required this.watchListModel});
 
   @override
-  State<WatchListCreateDialog> createState() => WatchListCreateDialogState();
+  State<WatchListUpdateDialog> createState() => _WatchListUpdateDialogState();
 }
 
-class WatchListCreateDialogState extends State<WatchListCreateDialog> {
-  final titleController = TextEditingController();
-  String? showType;
-  int? showPriority;
+class _WatchListUpdateDialogState extends State<WatchListUpdateDialog> {
+  late TextEditingController titleController;
+  late String showType;
+  late int showPriority;
   bool titleError = false;
+
+  @override
+  void initState() {
+    super.initState();
+    titleController = TextEditingController(text: widget.watchListModel.title);
+    showType = widget.watchListModel.type;
+    showPriority = widget.watchListModel.priority;
+  }
+
+  void updateWatchList() {
+    final newWatchListItem = WatchListModel()
+      ..id = widget.watchListModel.id
+      ..title = titleController.text
+      ..type = showType
+      ..priority = showPriority;
+
+    context.read<WatchListDatabase>().updateWatchList(newWatchListItem);
+    titleController.clear();
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      /// Dropdown menues
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,11 +136,13 @@ class WatchListCreateDialogState extends State<WatchListCreateDialog> {
           },
           child: Text(
             "Close",
-            style: TextStyle(color: Colors.red.shade300),
+            style: TextStyle(
+              color: Colors.red.shade300,
+            ),
           ),
         ),
 
-        /// Create button
+        /// Update button
         MaterialButton(
           onPressed: () {
             if (titleController.text.isEmpty) {
@@ -136,20 +150,11 @@ class WatchListCreateDialogState extends State<WatchListCreateDialog> {
                 titleError = true;
               });
             } else {
-              final newWatchListItem = WatchListModel()
-                ..title = titleController.text
-                ..type = showType ?? GlobalList.showTypeList.first
-                ..priority = showPriority ?? GlobalList.showPriorityList.first;
-
-              context
-                  .read<WatchListDatabase>()
-                  .createWatchList(newWatchListItem);
-              titleController.clear();
-              Navigator.pop(context);
+              updateWatchList();
             }
           },
           child: Text(
-            "Create",
+            "Update",
             style: TextStyle(color: Colors.green.shade300),
           ),
         ),
