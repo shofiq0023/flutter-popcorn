@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:popcorn/global.dart';
+import 'package:popcron/global.dart';
 
 class MyNavigationBar extends StatefulWidget {
   // Callback function to pass the current page index to the Home widget

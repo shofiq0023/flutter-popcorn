@@ -1,18 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:popcorn/databases/watch_list_database.dart';
-import 'package:popcorn/global.dart';
-import 'package:popcorn/models/watch_list.dart';
+
+import 'package:popcron/databases/watch_list_database.dart';
+import 'package:popcron/global.dart';
+import 'package:popcron/models/watch_list.dart';
 import 'package:provider/provider.dart';
-
-// final List<String> showTypeList = [
-//   'Movie',
-//   'Series',
-//   'Anime series',
-//   'Anime movie'
-// ];
-
-// final List<int> showPriorityList = [4, 1, 2, 3];
 
 class WatchListCreateDialog extends StatefulWidget {
   const WatchListCreateDialog({super.key});

@@ -1,8 +1,6 @@
-import 'dart:ui';
-
+import 'package:popcron/global.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:popcorn/global.dart';
 
 class MyAppbar extends StatelessWidget implements PreferredSizeWidget {
   MyAppbar({super.key});

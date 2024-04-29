@@ -1,7 +1,7 @@
+import 'package:popcron/models/watch_list.dart';
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:popcorn/models/watch_list.dart';
 
 class WatchListDatabase extends ChangeNotifier {
   static late Isar isar;

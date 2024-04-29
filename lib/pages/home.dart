@@ -1,13 +1,13 @@
+import 'package:popcron/databases/watch_list_database.dart';
+import 'package:popcron/global.dart';
+import 'package:popcron/models/watch_list.dart';
+import 'package:popcron/pages/explore_page.dart';
+import 'package:popcron/pages/profile_page.dart';
+import 'package:popcron/pages/watch_list_page.dart';
+import 'package:popcron/templates/custom_appbar.dart';
+import 'package:popcron/templates/custom_bottom_nav.dart';
+import 'package:popcron/templates/watch_list_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:popcorn/databases/watch_list_database.dart';
-import 'package:popcorn/global.dart';
-import 'package:popcorn/models/watch_list.dart';
-import 'package:popcorn/pages/explore_page.dart';
-import 'package:popcorn/pages/profile_page.dart';
-import 'package:popcorn/pages/watch_list_page.dart';
-import 'package:popcorn/templates/custom_appbar.dart';
-import 'package:popcorn/templates/custom_bottom_nav.dart';
-import 'package:popcorn/templates/watch_list_dialog.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {

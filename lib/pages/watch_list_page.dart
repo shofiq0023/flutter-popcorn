@@ -1,6 +1,7 @@
+import 'package:popcron/models/watch_list.dart';
+import 'package:popcron/templates/watch_list_items.dart';
 import 'package:flutter/material.dart';
-import 'package:popcorn/models/watch_list.dart';
-import 'package:popcorn/templates/watch_list_items.dart';
+
 
 class WatchListPage extends StatefulWidget {
   final List<WatchListModel> listItems;
