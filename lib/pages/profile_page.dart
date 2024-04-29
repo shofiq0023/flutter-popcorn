@@ -11,12 +11,24 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text(
-        'PROFILE Comming soon',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 62.0,
-        ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            "Your Beautiful Profile Page",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 32.0,
+            ),
+          ),
+          Text(
+            "Coming Soon",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 50.0,
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -11,9 +11,24 @@ class _ExplorePageState extends State<ExplorePage> {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text(
-        'EXPLORE',
-        style: TextStyle(color: Colors.white, fontSize: 62.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'An Awesome Explore Page',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 32.0,
+            ),
+          ),
+          Text(
+            'Coming Soon',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 50.0,
+            ),
+          ),
+        ],
       ),
     );
   }
