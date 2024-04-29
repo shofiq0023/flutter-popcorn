@@ -17,6 +17,14 @@ class WatchListPage extends StatefulWidget {
 class _WatchListPageState extends State<WatchListPage> {
   final searchBarController = TextEditingController();
 
+  List<WatchListModel> _listItems = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _listItems = widget.listItems;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -39,6 +47,14 @@ class _WatchListPageState extends State<WatchListPage> {
             ),
             onChanged: (value) {
               setState(() {
+                if (value.isEmpty) {
+                  _listItems = widget.listItems;
+                } else {
+                  _listItems = widget.listItems
+                      .where((i) =>
+                          i.title.toLowerCase().contains(value.toLowerCase()))
+                      .toList();
+                }
               });
             },
           ),
@@ -48,10 +64,10 @@ class _WatchListPageState extends State<WatchListPage> {
             shrinkWrap: true,
             padding: const EdgeInsets.only(
                 left: 8.0, right: 8.0, top: 5.0, bottom: 60.0),
-            itemCount: widget.listItems.length,
+            itemCount: _listItems.length,
             itemBuilder: (BuildContext context, int index) {
               return WatchListItem(
-                watchListModel: widget.listItems[index],
+                watchListModel: _listItems[index],
               );
             },
           ),
