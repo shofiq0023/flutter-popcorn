@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:popcorn/databases/watch_list_database.dart';
 import 'package:popcorn/global.dart';
 import 'package:popcorn/models/watch_list.dart';
-import 'package:popcorn/templates/my_dropdown_menu.dart';
 import 'package:provider/provider.dart';
 
 final List<String> showTypeList = [
@@ -73,12 +73,21 @@ class WatchListCreateDialogState extends State<WatchListCreateDialog> {
           ),
 
           /// Dropdown for Type of the show
-          MyDropdownMenu(
-            menuText: "Type of the show",
-            menuItems: showTypeList,
-            onShowTypeValue: (showTypeValue) {
-              showType = showTypeValue;
+          DropdownButton<String>(
+            value: showType,
+            isExpanded: true,
+            hint: const Text(
+              "Type of the show",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            onChanged: (String? selectedShowType) {
+              setState(() {
+                showType = selectedShowType!;
+              });
             },
+            items: getShowType(),
           ),
 
           /// For spacing
@@ -87,18 +96,28 @@ class WatchListCreateDialogState extends State<WatchListCreateDialog> {
           ),
 
           /// Dropdown for show priority
-          MyDropdownMenu(
-            menuText: "Priority of the show",
-            priorityList: showPriorityList,
-            onShowPriorityValue: (showPriorityValue) {
-              showPriority = showPriorityValue;
+          DropdownButton<int>(
+            value: showPriority,
+            isExpanded: true,
+            hint: const Text(
+              "Priority of the show",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            onChanged: (int? selectedPriority) {
+              setState(() {
+                showPriority = selectedPriority!;
+              });
             },
+            items: getPriorityList(),
           ),
         ],
       ),
 
       /// Action Buttons
       actions: [
+        /// Cancel button
         MaterialButton(
           onPressed: () {
             Navigator.pop(context);
@@ -108,6 +127,8 @@ class WatchListCreateDialogState extends State<WatchListCreateDialog> {
             style: TextStyle(color: Colors.red.shade300),
           ),
         ),
+
+        /// Create button
         MaterialButton(
           onPressed: () {
             if (titleController.text.isEmpty) {
@@ -119,8 +140,6 @@ class WatchListCreateDialogState extends State<WatchListCreateDialog> {
                 ..title = titleController.text
                 ..type = showType ?? showTypeList.first
                 ..priority = showPriority ?? showPriorityList.first;
-
-              print(newWatchListItem.toString());
 
               context
                   .read<WatchListDatabase>()
@@ -136,5 +155,78 @@ class WatchListCreateDialogState extends State<WatchListCreateDialog> {
         ),
       ],
     );
+  }
+
+  /// Get the Dropdown items for the Type of the show
+  List<DropdownMenuItem<String>>? getShowType() {
+    return showTypeList.map<DropdownMenuItem<String>>(
+      (String value) {
+        return DropdownMenuItem(
+          value: value,
+          child: Text(
+            value,
+            style: const TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        );
+      },
+    ).toList();
+  }
+
+  /// Get the Dropdown items for Show priority list
+  List<DropdownMenuItem<int>>? getPriorityList() {
+    return showPriorityList.map<DropdownMenuItem<int>>(
+      (int value) {
+        return DropdownMenuItem(
+          value: value,
+          child: Row(
+            children: [
+              Icon(
+                Icons.remove_red_eye,
+                color: getPriorityColor(value),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(left: 10.0),
+              ),
+              Text(
+                getPriorityText(value),
+                style: const TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    ).toList();
+  }
+
+  /// Get the text based on the priority level
+  String getPriorityText(int priorityLevel) {
+    switch (priorityLevel) {
+      case 1:
+        return "High";
+      case 2:
+        return "Medium";
+      case 3:
+        return "Low";
+      default:
+        return "Normal";
+    }
+  }
+
+  /// Get color of the priority based on priority level
+  HexColor getPriorityColor(int priorityLevel) {
+    switch (priorityLevel) {
+      case 1:
+        return CustomColors.priorityOne;
+      case 2:
+        return CustomColors.priorityTwo;
+      case 3:
+        return CustomColors.priorityThree;
+      default:
+        return CustomColors.offwhite;
+    }
   }
 }
