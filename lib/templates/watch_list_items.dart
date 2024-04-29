@@ -60,7 +60,7 @@ class _WatchListItemState extends State<WatchListItem> {
               // Priority tag
               Container(
                 width: 4.0,
-                color: getPriorityColor(widget.watchListModel.priority),
+                color: GlobalList.getPriorityColor(widget.watchListModel.priority),
               ),
 
               // Padding between priority tag and titles
@@ -129,17 +129,5 @@ class _WatchListItemState extends State<WatchListItem> {
       ),
     );
   }
-
-  // Set the color of the Priority tag
-  Color getPriorityColor(int priority) {
-    if (priority == 1) {
-      return CustomColors.priorityOne;
-    } else if (priority == 2) {
-      return CustomColors.priorityTwo;
-    } else if (priority == 3) {
-      return CustomColors.priorityThree;
-    } else {
-      return CustomColors.cardBg;
-    }
-  }
+  
 }

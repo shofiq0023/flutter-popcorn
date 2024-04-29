@@ -5,8 +5,8 @@ import 'package:popcron/global.dart';
 class MyNavigationBar extends StatefulWidget {
   // Callback function to pass the current page index to the Home widget
   final Function(int) onIndexSelected;
-  const MyNavigationBar({super.key,  required this.onIndexSelected});
-  
+  const MyNavigationBar({super.key, required this.onIndexSelected});
+
   @override
   State<MyNavigationBar> createState() => _MyNavigationBarState();
 }
@@ -22,11 +22,11 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
     return Container(
       decoration: const BoxDecoration(
         boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: Color.fromRGBO(0, 0, 0, 0.2),
-              blurRadius: 10,
-            ),
-          ],
+          BoxShadow(
+            color: Color.fromRGBO(0, 0, 0, 0.2),
+            blurRadius: 10,
+          ),
+        ],
       ),
       child: NavigationBarTheme(
         data: NavigationBarThemeData(
@@ -42,7 +42,7 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
             setState(() {
               pageIndex = index;
             });
-      
+
             // Calls the index passing function
             widget.onIndexSelected(index);
           },
@@ -50,15 +50,6 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
         ),
       ),
     );
-  }
-
-  /// Get the bottom navbar icon's color on click
-  Color getIconColor({currentIndex, targetIndex}) {
-    if (currentIndex == targetIndex) {
-      return Colors.black;
-    } else {
-      return CustomColors.offwhite;
-    }
   }
 
   /// Navigations list
@@ -91,4 +82,12 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
     ];
   }
 
+  /// Get the bottom navbar icon's color on click
+  Color getIconColor({currentIndex, targetIndex}) {
+    if (currentIndex == targetIndex) {
+      return Colors.black;
+    } else {
+      return CustomColors.offwhite;
+    }
+  }
 }
