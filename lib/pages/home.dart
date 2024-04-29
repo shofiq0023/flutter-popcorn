@@ -40,12 +40,6 @@ class _HomeState extends State<Home> {
     context.read<WatchListDatabase>().fetchWatchList();
   }
 
-  // update
-  void updateWatchList() {}
-
-  // delete
-  void deleteWatchList() {}
-
   @override
   Widget build(BuildContext context) {
     final watchListDb = context.watch<WatchListDatabase>();

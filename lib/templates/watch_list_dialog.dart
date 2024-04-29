@@ -5,14 +5,14 @@ import 'package:popcorn/global.dart';
 import 'package:popcorn/models/watch_list.dart';
 import 'package:provider/provider.dart';
 
-final List<String> showTypeList = [
-  'Movie',
-  'Series',
-  'Anime series',
-  'Anime movie'
-];
+// final List<String> showTypeList = [
+//   'Movie',
+//   'Series',
+//   'Anime series',
+//   'Anime movie'
+// ];
 
-final List<int> showPriorityList = [4, 1, 2, 3];
+// final List<int> showPriorityList = [4, 1, 2, 3];
 
 class WatchListCreateDialog extends StatefulWidget {
   const WatchListCreateDialog({super.key});
@@ -138,8 +138,8 @@ class WatchListCreateDialogState extends State<WatchListCreateDialog> {
             } else {
               final newWatchListItem = WatchListModel()
                 ..title = titleController.text
-                ..type = showType ?? showTypeList.first
-                ..priority = showPriority ?? showPriorityList.first;
+                ..type = showType ?? GlobalList.showTypeList.first
+                ..priority = showPriority ?? GlobalList.showPriorityList.first;
 
               context
                   .read<WatchListDatabase>()
@@ -159,7 +159,7 @@ class WatchListCreateDialogState extends State<WatchListCreateDialog> {
 
   /// Get the Dropdown items for the Type of the show
   List<DropdownMenuItem<String>>? getShowType() {
-    return showTypeList.map<DropdownMenuItem<String>>(
+    return GlobalList.showTypeList.map<DropdownMenuItem<String>>(
       (String value) {
         return DropdownMenuItem(
           value: value,
@@ -176,7 +176,7 @@ class WatchListCreateDialogState extends State<WatchListCreateDialog> {
 
   /// Get the Dropdown items for Show priority list
   List<DropdownMenuItem<int>>? getPriorityList() {
-    return showPriorityList.map<DropdownMenuItem<int>>(
+    return GlobalList.showPriorityList.map<DropdownMenuItem<int>>(
       (int value) {
         return DropdownMenuItem(
           value: value,

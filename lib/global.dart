@@ -10,3 +10,14 @@ class CustomColors {
   static final HexColor priorityTwo = HexColor("#7E38B7");
   static final HexColor priorityThree = HexColor("#541675");
 }
+
+class GlobalList {
+  static List<String> showTypeList = [
+    'Movie',
+    'Series',
+    'Anime series',
+    'Anime movie'
+  ];
+
+  static List<int> showPriorityList = [4, 1, 2, 3];
+}
