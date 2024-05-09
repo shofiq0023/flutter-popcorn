@@ -1,7 +1,9 @@
 import 'package:popcron/databases/watch_list_database.dart';
+import 'package:popcron/models/watch_list.dart';
 import 'package:popcron/templates/watch_list_items.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class WatchListPage extends StatefulWidget {
   const WatchListPage({
@@ -14,6 +16,13 @@ class WatchListPage extends StatefulWidget {
 
 class _WatchListPageState extends State<WatchListPage> {
   final searchBarController = TextEditingController();
+  List<WatchListModel> watchList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<WatchListDatabase>().fetchWatchList();
+  }
 
   void clearSarchBar() {
     context.read<WatchListDatabase>().clearFilter();
@@ -23,6 +32,8 @@ class _WatchListPageState extends State<WatchListPage> {
 
   @override
   Widget build(BuildContext context) {
+    final lists = context.watch<WatchListDatabase>().watchLists;
+
     return Column(
       children: [
         /// The search bar
@@ -67,19 +78,34 @@ class _WatchListPageState extends State<WatchListPage> {
 
         /// The List of Shows
         Expanded(
-          child: context.read<WatchListDatabase>().watchLists.isNotEmpty
-              ? ListView.builder(
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.only(
-                      left: 8.0, right: 8.0, top: 5.0, bottom: 60.0),
-                  itemCount:
-                      context.watch<WatchListDatabase>().watchLists.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return WatchListItem(
-                      watchListModel:
-                          context.watch<WatchListDatabase>().watchLists[index],
-                    );
-                  },
+          child: lists.isNotEmpty
+              ? AnimationLimiter(
+                  child: ListView.builder(
+                    physics: const BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics(),
+                    ),
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.only(
+                        left: 8.0, right: 8.0, top: 5.0, bottom: 60.0),
+                    itemCount: lists.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return AnimationConfiguration.staggeredList(
+                        position: index,
+                        delay: const Duration(milliseconds: 100),
+                        child: SlideAnimation(
+                          duration: const Duration(milliseconds: 2500),
+                          curve: Curves.fastLinearToSlowEaseIn,
+                          child: FadeInAnimation(
+                            curve: Curves.fastLinearToSlowEaseIn,
+                            duration: const Duration(milliseconds: 2500),
+                            child: WatchListItem(
+                              watchListModel: lists[index],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 )
               : const Padding(
                   padding: EdgeInsets.only(top: 20.0),
