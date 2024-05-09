@@ -30,15 +30,18 @@ class WatchListDatabase extends ChangeNotifier {
     fetchWatchList();
   }
 
-  // Read
-  Future<void> fetchWatchList() async {
+  Future<void> getTheFullList() async {
     List<WatchListModel> lists = await isar.watchListModels.where().findAll();
     watchLists.clear();
     watchLists.addAll(lists);
     watchLists.sort(
       (a, b) => a.priority.compareTo(b.priority),
     );
+  }
 
+  // Read
+  Future<void> fetchWatchList() async {
+    await getTheFullList();
     notifyListeners();
   }
 
@@ -65,20 +68,28 @@ class WatchListDatabase extends ChangeNotifier {
       await filterList(getFilteringTitle());
     } else {
       await fetchWatchList();
-
     }
   }
 
   Future<void> filterList(String title) async {
+    // First create an empty list
     List<WatchListModel> filteredList = [];
+
+    // Get the full list from DB
+    await getTheFullList();
+
+    // Set the value of the filtering title 
     setFilteringTitle(title);
 
+    // Filter the DB list and store it in the empty list
     filteredList = watchLists
         .where((i) =>
             i.title.toLowerCase().contains(getFilteringTitle().toLowerCase()))
         .toList();
 
+    // Set the actual DB list to the filtered list
     watchLists = filteredList;
+    
     notifyListeners();
   }
 

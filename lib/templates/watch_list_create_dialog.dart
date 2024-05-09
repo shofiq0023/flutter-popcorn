@@ -29,6 +29,7 @@ class WatchListCreateDialogState extends State<WatchListCreateDialog> {
           /// For the title of the show
           TextField(
             controller: titleController,
+            textCapitalization: TextCapitalization.sentences,
             decoration: InputDecoration(
               error: titleError
                   ? const Text(
