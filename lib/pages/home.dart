@@ -1,6 +1,5 @@
 import 'package:popcron/databases/watch_list_database.dart';
 import 'package:popcron/global.dart';
-import 'package:popcron/models/watch_list.dart';
 import 'package:popcron/pages/explore_page.dart';
 import 'package:popcron/pages/profile_page.dart';
 import 'package:popcron/pages/watch_list_page.dart';
@@ -42,10 +41,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    final watchListDb = context.watch<WatchListDatabase>();
-
-    List<WatchListModel> lists = watchListDb.watchLists;
-
     return Scaffold(
       appBar: MyAppbar(),
       floatingActionButton: customFAB(),
@@ -57,9 +52,7 @@ class _HomeState extends State<Home> {
         });
       }),
       body: [
-        WatchListPage(
-          listItems: lists,
-        ),
+        const WatchListPage(),
         const ExplorePage(),
         const ProfilePage()
       ][pageIndex], // Changes the content based on bottom navbar item click

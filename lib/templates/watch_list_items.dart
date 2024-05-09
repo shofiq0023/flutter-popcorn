@@ -68,7 +68,7 @@ class _WatchListItemState extends State<WatchListItem> {
                 width: 12.0,
               ),
 
-              // Title and radio button
+              // Title and delete button
               Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -104,7 +104,7 @@ class _WatchListItemState extends State<WatchListItem> {
                       ),
                     ),
 
-                    // Placeholder radio button
+                    // Delete button
                     IconButton(
                       onPressed: () {
                         deleteWatchList(widget.watchListModel.id);

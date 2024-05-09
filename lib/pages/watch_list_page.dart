@@ -1,13 +1,11 @@
-import 'package:popcron/models/watch_list.dart';
+import 'package:popcron/databases/watch_list_database.dart';
 import 'package:popcron/templates/watch_list_items.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class WatchListPage extends StatefulWidget {
-  final List<WatchListModel> listItems;
-
   const WatchListPage({
     super.key,
-    required this.listItems,
   });
 
   @override
@@ -17,18 +15,11 @@ class WatchListPage extends StatefulWidget {
 class _WatchListPageState extends State<WatchListPage> {
   final searchBarController = TextEditingController();
 
-  List<WatchListModel> _listItems = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _listItems = widget.listItems;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
+        /// The search bar
         Container(
           padding: const EdgeInsets.only(bottom: 10.0, left: 10.0, right: 10.0),
           child: TextField(
@@ -46,28 +37,26 @@ class _WatchListPageState extends State<WatchListPage> {
               color: Colors.white,
             ),
             onChanged: (value) {
-              setState(() {
-                if (value.isEmpty) {
-                  _listItems = widget.listItems;
-                } else {
-                  _listItems = widget.listItems
-                      .where((i) =>
-                          i.title.toLowerCase().contains(value.toLowerCase()))
-                      .toList();
-                }
-              });
+              if (value.isEmpty) {
+                context.read<WatchListDatabase>().clearFilter();
+              } else {
+                context.read<WatchListDatabase>().filterList(value);
+              }
             },
           ),
         ),
+
+        /// The List of Shows
         Expanded(
           child: ListView.builder(
             shrinkWrap: true,
             padding: const EdgeInsets.only(
                 left: 8.0, right: 8.0, top: 5.0, bottom: 60.0),
-            itemCount: _listItems.length,
+            itemCount: context.watch<WatchListDatabase>().watchLists.length,
             itemBuilder: (BuildContext context, int index) {
               return WatchListItem(
-                watchListModel: _listItems[index],
+                watchListModel:
+                    context.watch<WatchListDatabase>().watchLists[index],
               );
             },
           ),

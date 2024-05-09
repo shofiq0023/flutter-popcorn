@@ -5,6 +5,7 @@ import 'package:path_provider/path_provider.dart';
 
 class WatchListDatabase extends ChangeNotifier {
   static late Isar isar;
+  String titleToFilterWith = "";
 
   // List of data
   List<WatchListModel> watchLists = [];
@@ -58,6 +59,39 @@ class WatchListDatabase extends ChangeNotifier {
   // Delete
   Future<void> deleteWatchList(int id) async {
     await isar.writeTxn(() => isar.watchListModels.delete(id));
-    await fetchWatchList();
+
+    if (getFilteringTitle().isNotEmpty) {
+      await fetchWatchList();
+      await filterList(getFilteringTitle());
+    } else {
+      await fetchWatchList();
+
+    }
+  }
+
+  Future<void> filterList(String title) async {
+    List<WatchListModel> filteredList = [];
+    setFilteringTitle(title);
+
+    filteredList = watchLists
+        .where((i) =>
+            i.title.toLowerCase().contains(getFilteringTitle().toLowerCase()))
+        .toList();
+
+    watchLists = filteredList;
+    notifyListeners();
+  }
+
+  Future<void> clearFilter() async {
+    setFilteringTitle("");
+    fetchWatchList();
+  }
+
+  void setFilteringTitle(String title) {
+    titleToFilterWith = title;
+  }
+
+  String getFilteringTitle() {
+    return titleToFilterWith;
   }
 }
