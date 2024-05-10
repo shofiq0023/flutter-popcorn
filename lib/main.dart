@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:popcron/databases/watch_list_database.dart';
-import 'package:popcron/global.dart';
-import 'package:popcron/pages/home.dart';
+import 'package:popcron/global_data.dart';
+import 'package:popcron/pages/home_page.dart';
 import 'package:provider/provider.dart';
 
 void main() async {

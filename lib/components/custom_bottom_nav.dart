@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:popcron/global.dart';
+import 'package:popcron/global_data.dart';
 
 class MyNavigationBar extends StatefulWidget {
   // Callback function to pass the current page index to the Home widget
@@ -52,7 +52,7 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
     );
   }
 
-  /// Navigations list
+  /// Navigation list
   List<NavigationDestination> getNavigations() {
     return [
       NavigationDestination(

@@ -1,11 +1,11 @@
 import 'package:popcron/databases/watch_list_database.dart';
-import 'package:popcron/global.dart';
+import 'package:popcron/global_data.dart';
 import 'package:popcron/pages/explore_page.dart';
 import 'package:popcron/pages/profile_page.dart';
 import 'package:popcron/pages/watch_list_page.dart';
-import 'package:popcron/templates/custom_appbar.dart';
-import 'package:popcron/templates/custom_bottom_nav.dart';
-import 'package:popcron/templates/watch_list_create_dialog.dart';
+import 'package:popcron/components/custom_appbar.dart';
+import 'package:popcron/components/custom_bottom_nav.dart';
+import 'package:popcron/components/watch_list_create_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

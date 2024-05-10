@@ -1,47 +1,27 @@
 import 'package:flutter/material.dart';
+
 import 'package:popcron/databases/watch_list_database.dart';
-import 'package:popcron/global.dart';
+import 'package:popcron/global_data.dart';
 import 'package:popcron/models/watch_list.dart';
 import 'package:provider/provider.dart';
 
-class WatchListUpdateDialog extends StatefulWidget {
-  final WatchListModel watchListModel;
-
-  const WatchListUpdateDialog({super.key, required this.watchListModel});
+class WatchListCreateDialog extends StatefulWidget {
+  const WatchListCreateDialog({super.key});
 
   @override
-  State<WatchListUpdateDialog> createState() => _WatchListUpdateDialogState();
+  State<WatchListCreateDialog> createState() => WatchListCreateDialogState();
 }
 
-class _WatchListUpdateDialogState extends State<WatchListUpdateDialog> {
-  late TextEditingController titleController;
-  late String showType;
-  late int showPriority;
+class WatchListCreateDialogState extends State<WatchListCreateDialog> {
+  final titleController = TextEditingController();
+  String? showType;
+  int? showPriority;
   bool titleError = false;
-
-  @override
-  void initState() {
-    super.initState();
-    titleController = TextEditingController(text: widget.watchListModel.title);
-    showType = widget.watchListModel.type;
-    showPriority = widget.watchListModel.priority;
-  }
-
-  void updateWatchList() {
-    final newWatchListItem = WatchListModel()
-      ..id = widget.watchListModel.id
-      ..title = titleController.text
-      ..type = showType
-      ..priority = showPriority;
-
-    context.read<WatchListDatabase>().updateWatchList(newWatchListItem);
-    titleController.clear();
-    Navigator.pop(context);
-  }
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      /// Dropdown menues
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,7 +79,7 @@ class _WatchListUpdateDialogState extends State<WatchListUpdateDialog> {
                 showType = selectedShowType!;
               });
             },
-            items: GlobalList.getShowType(),
+            items: GlobalData.getShowType(),
           ),
 
           /// For spacing
@@ -122,7 +102,7 @@ class _WatchListUpdateDialogState extends State<WatchListUpdateDialog> {
                 showPriority = selectedPriority!;
               });
             },
-            items: GlobalList.getPriorityList(),
+            items: GlobalData.getPriorityList(),
           ),
         ],
       ),
@@ -136,13 +116,11 @@ class _WatchListUpdateDialogState extends State<WatchListUpdateDialog> {
           },
           child: Text(
             "Close",
-            style: TextStyle(
-              color: Colors.red.shade300,
-            ),
+            style: TextStyle(color: Colors.red.shade300),
           ),
         ),
 
-        /// Update button
+        /// Create button
         MaterialButton(
           onPressed: () {
             if (titleController.text.isEmpty) {
@@ -150,11 +128,20 @@ class _WatchListUpdateDialogState extends State<WatchListUpdateDialog> {
                 titleError = true;
               });
             } else {
-              updateWatchList();
+              final newWatchListItem = WatchListModel()
+                ..title = titleController.text
+                ..type = showType ?? GlobalData.showTypeList.first
+                ..priority = showPriority ?? GlobalData.showPriorityList.first;
+
+              context
+                  .read<WatchListDatabase>()
+                  .addWatchListItem(newWatchListItem);
+              titleController.clear();
+              Navigator.pop(context);
             }
           },
           child: Text(
-            "Update",
+            "Create",
             style: TextStyle(color: Colors.green.shade300),
           ),
         ),

@@ -12,7 +12,7 @@ class CustomColors {
   static final HexColor priorityThree = HexColor("#541675");
 }
 
-class GlobalList {
+class GlobalData {
   static List<String> showTypeList = [
     'Movie',
     'Series',
@@ -24,7 +24,7 @@ class GlobalList {
 
   /// Get the Dropdown items for the Type of the show
   static List<DropdownMenuItem<String>>? getShowType() {
-    return GlobalList.showTypeList.map<DropdownMenuItem<String>>(
+    return GlobalData.showTypeList.map<DropdownMenuItem<String>>(
       (String value) {
         return DropdownMenuItem(
           value: value,
@@ -41,7 +41,7 @@ class GlobalList {
 
   /// Get the Dropdown items for Show priority list
   static List<DropdownMenuItem<int>>? getPriorityList() {
-    return GlobalList.showPriorityList.map<DropdownMenuItem<int>>(
+    return GlobalData.showPriorityList.map<DropdownMenuItem<int>>(
       (int value) {
         return DropdownMenuItem(
           value: value,

@@ -1,6 +1,6 @@
 import 'package:popcron/databases/watch_list_database.dart';
 import 'package:popcron/models/watch_list.dart';
-import 'package:popcron/templates/watch_list_items.dart';
+import 'package:popcron/components/watch_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -32,7 +32,7 @@ class _WatchListPageState extends State<WatchListPage> {
 
   @override
   Widget build(BuildContext context) {
-    final lists = context.watch<WatchListDatabase>().watchLists;
+    final watchList = context.watch<WatchListDatabase>().watchList;
 
     return Column(
       children: [
@@ -44,7 +44,7 @@ class _WatchListPageState extends State<WatchListPage> {
 
         /// The List of Shows
         Expanded(
-          child: lists.isNotEmpty ? getList(lists) : getNoDataText(),
+          child: watchList.isNotEmpty ? getList(watchList) : getNoDataText(),
         ),
       ],
     );
@@ -106,28 +106,35 @@ class _WatchListPageState extends State<WatchListPage> {
     );
   }
 
-  AnimationLimiter getList(List<WatchListModel> lists) {
+  AnimationLimiter getList(List<WatchListModel> watchList) {
+    int listItemAppearanceDelay = 100;
+    int animDuration = 1800;
+
     return AnimationLimiter(
       child: ListView.builder(
+        shrinkWrap: true,
         physics: const BouncingScrollPhysics(
           parent: AlwaysScrollableScrollPhysics(),
         ),
-        shrinkWrap: true,
         padding: const EdgeInsets.only(
-            left: 8.0, right: 8.0, top: 5.0, bottom: 60.0),
-        itemCount: lists.length,
+          left: 8.0,
+          right: 8.0,
+          top: 5.0,
+          bottom: 60.0,
+        ),
+        itemCount: watchList.length,
         itemBuilder: (BuildContext context, int index) {
           return AnimationConfiguration.staggeredList(
             position: index,
-            delay: const Duration(milliseconds: 100),
+            delay: Duration(milliseconds: listItemAppearanceDelay),
             child: SlideAnimation(
-              duration: const Duration(milliseconds: 2500),
+              duration: Duration(milliseconds: animDuration),
               curve: Curves.fastLinearToSlowEaseIn,
               child: FadeInAnimation(
                 curve: Curves.fastLinearToSlowEaseIn,
-                duration: const Duration(milliseconds: 2500),
+                duration: Duration(milliseconds: animDuration),
                 child: WatchListItem(
-                  watchListModel: lists[index],
+                  watchListModel: watchList[index],
                 ),
               ),
             ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:popcron/databases/watch_list_database.dart';
-import 'package:popcron/global.dart';
+import 'package:popcron/global_data.dart';
 import 'package:popcron/models/watch_list.dart';
-import 'package:popcron/templates/watch_list_update_dialog.dart';
+import 'package:popcron/components/watch_list_update_dialog.dart';
 import 'package:provider/provider.dart';
 
 class WatchListItem extends StatefulWidget {
@@ -16,8 +16,8 @@ class WatchListItem extends StatefulWidget {
 
 class _WatchListItemState extends State<WatchListItem> {
   // Delete
-  void deleteWatchList(int id) {
-    context.read<WatchListDatabase>().deleteWatchList(id);
+  void deleteWatchListItem(int id) {
+    context.read<WatchListDatabase>().deleteWatchListItem(id);
   }
 
   // Update
@@ -60,7 +60,7 @@ class _WatchListItemState extends State<WatchListItem> {
               // Priority tag
               Container(
                 width: 4.0,
-                color: GlobalList.getPriorityColorForCard(widget.watchListModel.priority),
+                color: GlobalData.getPriorityColorForCard(widget.watchListModel.priority),
               ),
 
               // Padding between priority tag and titles
@@ -107,7 +107,7 @@ class _WatchListItemState extends State<WatchListItem> {
                     // Delete button
                     IconButton(
                       onPressed: () {
-                        deleteWatchList(widget.watchListModel.id);
+                        deleteWatchListItem(widget.watchListModel.id);
                       },
                       icon: Icon(
                         Icons.delete_forever,

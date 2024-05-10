@@ -1,11 +1,11 @@
-import 'package:popcron/global.dart';
+import 'package:popcron/global_data.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class MyAppbar extends StatelessWidget implements PreferredSizeWidget {
   MyAppbar({super.key});
   final appBarHeight = 65.0;
-  final appTitle = 'POPCRON';
+  final appTitle = 'POPCORN';
   final borderRadius = 15.0;
   final titleSize = 28.0;
   final appBarElevation = 8.0;
